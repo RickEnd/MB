@@ -1,0 +1,31 @@
+using System;
+
+namespace SquareF
+{
+    public class MBSquare
+    {
+        public static string Circle(double R) //Окружность
+        {
+            string ret;
+            if (R <= 0) //Проверка на положительное число
+            { return "Error: R can't be <= 0"; }
+            else
+                ret = Convert.ToString(Math.PI * Math.Pow(R, 2));
+                return ret;
+        }
+        public static string Triangle(double x, double y, double z) // Треугольник
+        {
+            if (x <= 0 || y<= 0 || z <= 0)
+            { return "Error: any side can't be <= 0"; } //Проверка на положительные числа
+            else
+               if (x + y <= z || x + z <= y || y + z <= x) //Проверка на существование треугольника
+            { return "Error: this triangle does not exist"; }
+            double p = (x + y + z) / 2;
+            if (Math.Sqrt(x) == (Math.Sqrt(y) + Math.Sqrt(z)) || Math.Sqrt(y) == (Math.Sqrt(x) + Math.Sqrt(z)) || Math.Sqrt(z) == (Math.Sqrt(x) + Math.Sqrt(y))) //Проверка на правильность треугольника
+
+            { return Convert.ToString(Math.Sqrt(p * (p - x) * (p - y) * (p - z))) + " This is right triangle"; }
+            else
+                return Convert.ToString(Math.Sqrt(p * (p - x) * (p - y) * (p - z)));
+        }
+    }
+}
