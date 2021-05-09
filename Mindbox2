@@ -1,0 +1,39 @@
+IF NOT EXISTS (SELECT * FROM SYSOBJECTS WHERE NAME='Prod' AND xtype='U') --Проверяем существование таблицы Prod	
+BEGIN
+CREATE TABLE Prod (Id INT PRIMARY KEY,"Name" NVARCHAR(30)); --Создаем таблицу для продукции
+
+INSERT INTO Prod --Заполняем таблицу продукции
+VALUES
+(1, 'Tuna'),
+(2, 'Chicken'),
+(3, 'Melon'),
+(4, 'Lemon'),
+(5, 'Corn');
+END
+
+IF NOT EXISTS (SELECT * FROM SYSOBJECTS WHERE NAME='Cat' AND xtype='U')	--Проверяем существование таблицы Cat	
+BEGIN
+CREATE TABLE Cat (Id INT PRIMARY KEY,"Name" NVARCHAR(30)); --Создаем таблицу для категорий
+
+INSERT INTO Cat --Заполняем таблицу категорий
+VALUES
+(1, 'All Meat and Fish'),
+(2, 'Fruits'),
+(3, 'Spices');
+END
+
+IF NOT EXISTS (SELECT * FROM SYSOBJECTS WHERE NAME='CatOfProd' AND xtype='U')	--Проверяем существование таблицы CatOfProd	
+BEGIN
+CREATE TABLE CatOfProd (IdProd INT FOREIGN KEY REFERENCES Prod(Id), IdCat INT FOREIGN KEY REFERENCES Cat(Id), PRIMARY KEY (IdProd,IdCat)); --Создаем таблицу для связей продукции и категорий
+
+INSERT INTO CatOfProd --Заполняем таблицу связей
+VALUES
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 2),
+(4, 3);
+END
+
+SELECT P."Name" as ProdName, C."Name" as CatName --Задание №2 выполнение
+FROM Prod as P LEFT JOIN CatOfProd as CoP on P.Id = CoP.IdProd LEFT JOIN Cat as C on C.Id = CoP.IdCat
